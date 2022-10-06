@@ -2,19 +2,26 @@ document.addEventListener('DOMContentLoaded', function(){
 
     let computerChoice = 0;
     let playerChoice = 0;
-    let computerScore = document.getElementById('computerScore');
-    let playerScore = document.getElementById('playerScore');
+    let computerScore = 0;
+    let playerScore = 0;
+    let computerScoreDisplay = document.getElementById('computerScoreDisplay');
+    let playerScoreDisplay = document.getElementById('playerScoreDisplay');
+    let roundResult = document.getElementById('roundResult');
     let numberOfRound = 5;
+    computerScore = 0;
+    playerScore = 0;
+
 
     const buttons = document.querySelectorAll('.weapon');
-    const playerChoiceDisplay = document.getElementById('playerChoiceDisplay');
-    const computerChoiceDisplay = document.getElementById('computerChoiceDisplay');
+    let playerChoiceDisplay = document.getElementById('playerChoiceDisplay');
+    let computerChoiceDisplay = document.getElementById('computerChoiceDisplay');
 
     buttons.forEach(button => {
         button.addEventListener("click", () => {
             getComputerChoice();
             playerChoice = button.id;
             playerChoiceDisplay.textContent = button.id;
+            updateScore(playerChoice, computerChoice);
         });
     });
 
@@ -33,8 +40,23 @@ document.addEventListener('DOMContentLoaded', function(){
         return computerChoiceDisplay.textContent = computerChoice;
     }
 
-    function getResults() {
+    function updateScore(playerChoice, computerChoice) {
+        playerChoiceDisplay = playerChoice;
+        computerChoiceDisplay = computerChoice;
 
+        if(computerChoice == playerChoice) {
+            roundResult.textContent = "Equality";
+        }else if(playerChoice == "rock" && computerChoice == "paper" ||
+                 playerChoice == "paper" && computerChoice == "scissors" ||
+                 playerChoice == "scissors" && computerChoice == "rock") {
+            roundResult.textContent = "Computer wins ! " + computerChoice + " beats " + playerChoice;
+            return computerScoreDisplay.textContent = computerScore++;
+        } else if(computerChoice == "rock" && playerChoice == "paper" ||
+                  computerChoice == "paper" && playerChoice == "scissors" ||
+                  computerChoice == "scissors" && playerChoice == "rock") {
+            roundResult.textContent = "You win ! " + playerChoice + " beats " + computerChoice;
+            return playerScoreDisplay.textContent = playerScore++;
+        }
     }
 
 
