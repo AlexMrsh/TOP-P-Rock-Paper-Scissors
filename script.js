@@ -1,27 +1,40 @@
 document.addEventListener('DOMContentLoaded', function(){
 
-    let computerChoice = 0;
-    let playerChoice = 0;
+    let computerChoice;
+    let playerChoice;
     let computerScore = 0;
     let playerScore = 0;
-    let computerScoreDisplay = document.getElementById('computerScoreDisplay');
-    let playerScoreDisplay = document.getElementById('playerScoreDisplay');
-    let roundResult = document.getElementById('roundResult');
-    let numberOfRound = 5;
-    computerScore = 0;
-    playerScore = 0;
+    let maxScore = 5;
 
-
+    let computerScoreDisplay = document.getElementById('computer-score-display');
+    let playerScoreDisplay = document.getElementById('player-score-display');
+    let roundResult = document.getElementById('round-result');
+    let playerChoiceDisplay = document.getElementById('player-choice-display');
+    let computerChoiceDisplay = document.getElementById('computer-choice-display');
+    let playerChoiceImg = document.getElementById('player-choice-img');
+    let computerChoiceImg = document.getElementById('computer-choice-img');
     const buttons = document.querySelectorAll('.weapon');
-    let playerChoiceDisplay = document.getElementById('playerChoiceDisplay');
-    let computerChoiceDisplay = document.getElementById('computerChoiceDisplay');
 
     buttons.forEach(button => {
         button.addEventListener("click", () => {
             getComputerChoice();
             playerChoice = button.id;
-            playerChoiceDisplay.textContent = button.id;
+            playerChoiceImg.setAttribute('src', `img/${button.id}.png`);
+            playerChoiceImg.setAttribute('alt', `${button.id}`);
             updateScore(playerChoice, computerChoice);
+
+            console.log('max player computer : ' + maxScore + ' ' + playerScore + ' ' + computerScore);
+
+            if(maxScore == playerScore || maxScore == computerScore){
+                buttons.forEach(function(element){
+                    element.classList.add('hidden')});
+                if(playerScore > computerScore){
+                    roundResult.textContent = "Player won the game !"
+                } else if(computerScore > playerScore){
+                    roundResult.textContent = "Computer won the game !"
+                }
+            }
+
         });
     });
 
@@ -37,12 +50,14 @@ document.addEventListener('DOMContentLoaded', function(){
                 computerChoice = "scissors";
                 break;
         }
+        computerChoiceImg.setAttribute('src', `img/${computerChoice}.png`);
+        computerChoiceImg.setAttribute('alt', `${computerChoice}`);
         return computerChoiceDisplay.textContent = computerChoice;
     }
 
     function updateScore(playerChoice, computerChoice) {
-        playerChoiceDisplay = playerChoice;
-        computerChoiceDisplay = computerChoice;
+        playerChoiceDisplay.textContent = playerChoice;
+        computerChoiceDisplay.textContent = computerChoice;
 
         if(computerChoice == playerChoice) {
             roundResult.textContent = "Equality";
@@ -50,50 +65,12 @@ document.addEventListener('DOMContentLoaded', function(){
                  playerChoice == "paper" && computerChoice == "scissors" ||
                  playerChoice == "scissors" && computerChoice == "rock") {
             roundResult.textContent = "Computer wins ! " + computerChoice + " beats " + playerChoice;
-            return computerScoreDisplay.textContent = computerScore++;
+            return computerScoreDisplay.textContent = ++computerScore;
         } else if(computerChoice == "rock" && playerChoice == "paper" ||
                   computerChoice == "paper" && playerChoice == "scissors" ||
                   computerChoice == "scissors" && playerChoice == "rock") {
             roundResult.textContent = "You win ! " + playerChoice + " beats " + computerChoice;
-            return playerScoreDisplay.textContent = playerScore++;
+            return playerScoreDisplay.textContent = ++playerScore;
         }
     }
-
-
 });
-
-/*
-
-
-function playRound(numberOfRound){
-    for(let i=0; i < numberOfRound; i++){
-        getPlayerChoice();
-    }
-}
-
-
-
-
-
-function getPlayerChoice() {
-    playerInput = prompt("Rock, Paper or Scissors ?")
-    playerChoice = playerInput.charAt(0).toUpperCase() + playerInput.slice(1).toLowerCase();
-    computerChoice = getComputerChoice();
-
-    if(computerChoice == playerChoice) {
-        console.log("Equality");
-    }else if(playerChoice == "Rock" && computerChoice == "Paper" ||
-             playerChoice == "Paper" && computerChoice == "Scissors" ||
-             playerChoice == "Scissors" && computerChoice == "Rock") {
-        console.log("Computer wins! " + computerChoice + " beats " + playerChoice);
-        computerScore++;
-    } else if(computerChoice == "Rock" && playerChoice == "Paper" ||
-              computerChoice == "Paper" && playerChoice == "Scissors" ||
-              computerChoice == "Scissors" && playerChoice == "Rock") {
-        console.log("You win! " + playerChoice + " beats " + computerChoice);
-        playerScore++;
-    }
-    console.log("Player : " + playerScore + "  |  " + computerScore + " : Computer");
-}
-
-*/

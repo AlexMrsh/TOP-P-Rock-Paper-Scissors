@@ -10,13 +10,19 @@
     <div id="center-block">
         <h1>Rock Paper Scissors</h1>
         <div id="display">
-            <span id="playerChoiceDisplay"></span>
-            <span id="computerChoiceDisplay"></span>
+            <div class="display-sides">
+                <img id="player-choice-img" src="" alt=""/>
+                <div class="choice-display" id="player-choice-display"></div>
+            </div>
+            <div class="display-sides">
+                <img id="computer-choice-img" src="" alt=""/>
+                <div class="choice-display" id="computer-choice-display"></div>
+            </div>
         </div>
-        <div id="roundResult">Let's play</div>
+        <div id="round-result">Let's play</div>
         <div id="scores">
-            <div id="playerScoreDisplay">0</div>
-            <div id="computerScoreDisplay">0</div>
+            <div id="player-score-display">0</div>
+            <div id="computer-score-display">0</div>
         </div>
         <div id="buttons">
             <button class="weapon" id="rock">Rock</button>
